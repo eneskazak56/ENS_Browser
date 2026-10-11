@@ -1,0 +1,91 @@
+<Window x:Class="ENSBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ENS Browser" Height="800" Width="1280"
+        Background="{DynamicResource WindowBackground}"
+        Foreground="{DynamicResource PrimaryText}"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Closing="Window_Closing">
+  <Grid Margin="12">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <DockPanel Grid.Row="0" LastChildFill="True">
+      <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+        <Button Content="AI" ToolTip="AI tools integration point" Click="AiTools_Click"/>
+        <Button Content="🛡 VPN" ToolTip="VPN connections" Click="VpnMenu_Click"/>
+        <Button Content="★" ToolTip="Bookmark current page" Click="Bookmark_Click"/>
+        <Button Content="−" ToolTip="Zoom out" Click="ZoomOut_Click"/>
+        <TextBlock x:Name="ZoomText" Text="100%" VerticalAlignment="Center" Margin="8,0"/>
+        <Button Content="+" ToolTip="Zoom in" Click="ZoomIn_Click"/>
+        <Button Content="☾" ToolTip="Toggle theme" Click="Theme_Click"/>
+      </StackPanel>
+      <TextBlock Text="ENS Browser" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
+    </DockPanel>
+
+    <DockPanel Grid.Row="1" Margin="0,10,0,10">
+      <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+        <Button Content="←" Click="Back_Click"/>
+        <Button Content="→" Click="Forward_Click"/>
+        <Button Content="↻" Click="Reload_Click"/>
+        <Button Content="＋" ToolTip="New tab" Click="NewTab_Click"/>
+      </StackPanel>
+      <Button DockPanel.Dock="Right" Content="☰" ToolTip="Bookmarks, history, downloads and integrations">
+        <Button.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="Bookmarks" Click="BookmarksMenu_Click"/>
+            <MenuItem Header="History" Click="HistoryMenu_Click"/>
+            <MenuItem Header="Library" Click="LibraryMenu_Click"/>
+            <MenuItem Header="Privacy controls" Click="PrivacyMenu_Click"/>
+            <MenuItem Header="Downloads folder" Click="DownloadsMenu_Click"/>
+            <Separator/>
+            <MenuItem Header="AI tools" Click="AiTools_Click"/>
+            <MenuItem Header="Visual search / maps / shopping / video" Click="ServicePlaceholders_Click"/>
+            <MenuItem Header="VPN connections" Click="VpnMenu_Click"/>
+            <MenuItem Header="Settings" Click="SettingsMenu_Click"/>
+            <Separator/>
+            <MenuItem Header="Clear history" Click="ClearHistoryMenu_Click"/>
+          </ContextMenu>
+        </Button.ContextMenu>
+      </Button>
+      <TextBox x:Name="AddressBox" ToolTip="Enter a URL or search terms" KeyDown="AddressBox_KeyDown" VerticalContentAlignment="Center"/>
+    </DockPanel>
+
+    <DockPanel x:Name="FindPanel" Grid.Row="2" Visibility="Collapsed" Margin="0,0,0,8">
+      <Button DockPanel.Dock="Right" Content="×" Click="CloseFind_Click"/>
+      <Button DockPanel.Dock="Right" Content="Find" Click="FindNext_Click"/>
+      <TextBox x:Name="FindBox" ToolTip="Find in page" KeyDown="FindBox_KeyDown"/>
+    </DockPanel>
+
+    <TabControl x:Name="Tabs" Grid.Row="3" SelectionChanged="Tabs_SelectionChanged">
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Title}" MaxWidth="180"/>
+            <Button Content="×" Padding="5,0" Click="CloseTab_Click"/>
+          </StackPanel>
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+      <TabControl.ContentTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid Loaded="BrowserHost_Loaded"/>
+          </Grid>
+        </DataTemplate>
+      </TabControl.ContentTemplate>
+    </TabControl>
+
+    <StatusBar Grid.Row="4" Background="{DynamicResource PanelBackground}">
+      <StatusBarItem><TextBlock x:Name="StatusText" Text="Ready"/></StatusBarItem>
+      <Separator/>
+      <StatusBarItem><TextBlock Text="Ctrl+L address  Ctrl+F find  Ctrl+T new tab  Ctrl+W close tab"/></StatusBarItem>
+      <Separator/>
+      <StatusBarItem><TextBlock Text="Private-by-default local state"/></StatusBarItem>
+    </StatusBar>
+  </Grid>
+</Window>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>ENSBrowser</RootNamespace>
+    <AssemblyName>ENSBrowser</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CefSharp.Common" Version="152.0.100" />
+    <PackageReference Include="CefSharp.Wpf" Version="152.0.100" />
+    <Reference Include="CefSharp">
+      <HintPath>$(NuGetPackageRoot)cefsharp.common\152.0.100\lib\net462\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core">
+      <HintPath>$(NuGetPackageRoot)cefsharp.common\152.0.100\lib\net462\CefSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Wpf">
+      <HintPath>$(NuGetPackageRoot)cefsharp.wpf\152.0.100\lib\net462\CefSharp.Wpf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
